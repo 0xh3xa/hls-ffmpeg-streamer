@@ -1,70 +1,79 @@
-## Hls-ffmpeg
+# HLS-FFmpeg
 
-This project intends to download a video from Google Drive, make HLS assets with segments, and extract the audio. Then create a master playlist for videos with different resolutions to different bandwidths, and make another playlist for the audio.
+[![Bash](https://img.shields.io/badge/Language-Bash-informational?style=flat&logo=gnu-bash&color=4EAA25)](https://www.gnu.org/software/bash/)
+[![FFmpeg](https://img.shields.io/badge/FFmpeg-FFmpeg-informational?style=flat&logo=ffmpeg&color=orange)](https://ffmpeg.org/)
+[![Golang](https://img.shields.io/badge/Language-Go-informational?style=flat&logo=go&color=00ADD8)](https://golang.org/)
 
-Including the file server with Golang for local/internal live streaming
+This project allows you to download a video from Google Drive, generate HLS assets (video segments) at different bitrates and resolutions, extract audio, and create master playlists for adaptive streaming. It also includes a Golang-based file server for local/internal live streaming.
 
-### Technologies
+## Features
 
-1. Bash
-2. FFMPEG
-3. Curl
-4. Golang
+- Download video from Google Drive  
+- Generate HLS video segments at multiple resolutions and bitrates  
+- Extract audio and create an HLS audio playlist  
+- Create a master playlist for adaptive streaming  
+- Simple local/internal streaming via a Golang file server  
 
-### Prerequisite 
+## Technologies Used
 
-I suppose that the FFMPEG has been installed.
+- **Bash** – scripting automation  
+- **FFmpeg** – video/audio processing  
+- **cURL** – file downloading  
+- **Golang** – lightweight file server  
 
-### How to run the script?
+## Prerequisites
 
-You can choose between the following, just Open the terminal and type.
+- **FFmpeg** installed and accessible in your PATH  
 
-1. 
+## How to Run
 
-``` sh
+You can run the script in two ways:
+
+### 1. Run with `run.sh`  
+
+```bash
 sh run.sh
 ```
+### 2. Run manually
 
-2. Or run it manually
+### 2. Run manually
 
-``` sh
+```bash
 chmod +x script.sh
-```
-
-, And
-
-``` sh
 sh script.sh
 ```
 
-### The output after execution
+## Output
 
-* After the execution, you will find the following directories contains different HLS segments with different resolution and bitrate and are named in the directory
+After execution, you will find:
 
-    1. video_6000k/
-    2. video_4500k/
-    3. video_3000k/
-    4. video_2000k/
-    5. video_1100k/
+#### Video directories with HLS segments at different bitrates/resolutions:
 
-* Master playlist for the videos `master.m3u8` with different resolutions to different bandwidths
+- `video_6000k/`
+- `video_4500k/`
+- `video_3000k/`
+- `video_2000k/`
+- `video_1100k/`
 
-* Master playlist for the audio `audio_.m3u8` for the audio to all HLS segments
+#### Master playlists:
 
-* `Logs` directories for logs of (videos, audios, file server, FFmpeg)
+- `master.m3u8` – for video with multiple resolutions
+- `audio_.m3u8` – for audio HLS segments
 
-### How will it look like after execution in treeview
+#### Logs directory:
 
-``` 
+- `logs/audio_log.txt` & `logs/audio_err.txt`
+- `logs/video_log.txt`
+- `logs/download_log.txt`
+- `logs/server_log.txt`
+
+
+```treeview
 ├── Readme.md
 ├── audio
 │   ├── video_000.mp3
 │   ├── video_001.mp3
-│   ├── video_002.mp3
-│   ├── video_003.mp3
-│   ├── video_004.mp3
-│   ├── video_005.mp3
-│   └── video_006.mp3
+│   └── ...
 ├── audio_.m3u8
 ├── config.sh
 ├── file_server.go
@@ -80,56 +89,38 @@ sh script.sh
 ├── script.sh
 ├── video_1100k
 │   ├── video_000.ts
-│   ├── video_001.ts
-│   ├── video_002.ts
-│   ├── video_003.ts
-│   ├── video_004.ts
-│   ├── video_005.ts
-│   └── video_006.ts
+│   └── ...
 ├── video_1100k.m3u8
 ├── video_2000k
 │   ├── video_000.ts
-│   ├── video_001.ts
-│   ├── video_002.ts
-│   ├── video_003.ts
-│   ├── video_004.ts
-│   ├── video_005.ts
-│   └── video_006.ts
+│   └── ...
 ├── video_2000k.m3u8
 ├── video_3000k
 │   ├── video_000.ts
-│   ├── video_001.ts
-│   ├── video_002.ts
-│   ├── video_003.ts
-│   ├── video_004.ts
-│   ├── video_005.ts
-│   └── video_006.ts
+│   └── ...
 ├── video_3000k.m3u8
 ├── video_4500k
 │   ├── video_000.ts
-│   ├── video_001.ts
-│   ├── video_002.ts
-│   ├── video_003.ts
-│   ├── video_004.ts
-│   ├── video_005.ts
-│   └── video_006.ts
+│   └── ...
 ├── video_4500k.m3u8
 ├── video_6000k
 │   ├── video_000.ts
-│   ├── video_001.ts
-│   ├── video_002.ts
-│   ├── video_003.ts
-│   ├── video_004.ts
-│   ├── video_005.ts
-│   └── video_006.ts
+│   └── ...
 └── video_6000k.m3u8
 ```
 
-### How to open the master playlist?
 
-You will find the following message at the terminal. 
+## How to Open the Master Playlist
 
-> Please open http://localhost:8081/master.m3u8 at `Safari` or `VLC` File > Open Network > URL
+1. Open your terminal, and you will see:
 
-> Or Open with VLC `master.m3u8`
-> Also, you can run `audio_.m3u8` by double-clicking on it to run with Music on Mac os.
+```bash
+Please open http://localhost:8081/master.m3u8 in Safari or VLC.
+```
+
+2. Or manually open with VLC:
+
+- `File > Open Network > URL`
+- Or directly open master.m3u8
+
+3. Audio playlist (audio_.m3u8) can be opened with Music app on macOS or VLC.
